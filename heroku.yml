@@ -1,5 +1,32 @@
-build:
-  docker:
-    web: Dockerfile
-run:
-  web: bundle exec puma -C config/puma.rb
+  version: "3.7"
+services:
+  worker:
+      build: ./web #build use docker file
+      image: flask_redis
+      depends_on:
+        - redis
+      # command: rq worker --name worker --url redis://redis:6379/0
+      volumes:
+        - ./web:/web
+
+  web:
+    build: ./web
+    image: flask_redis
+    ports:
+      - 5000:5000
+    # # command: gunicorn  --bind 0.0.0.0:5000 run:app
+    # command: python3 ./web/run.py
+    stdin_open: true
+    tty: true
+    depends_on:
+      - worker
+    volumes:
+      - ./web:/web
+
+  redis:
+    image: redis
+
+  run:
+    web: gunicorn --bind 0.0.0.0:5000 wsgi:app
+    worker: rq worker --name worker --url redis://redis:6379/0
+
