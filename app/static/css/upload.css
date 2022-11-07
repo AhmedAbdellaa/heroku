@@ -1,0 +1,119 @@
+:root {
+    --white: #ffffff;
+    --dark: #131313;
+    --snow: #f7f7f7;
+    --sea: #007bff;
+    --dropzone-border: #c6ccd6;
+    --dropzone-background: #f9f9fb;
+    --file-text-color: #8c96a8;
+    --file-icon-border: lighten(#8c96a8, 15);
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--snow);
+    margin: 2rem 0;
+}
+
+.container {
+    width: 45rem;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.75rem 1.5rem rgba(var(--dark), 0.03);
+}
+
+.dropzone {
+    border: 0.0625rem solid var(--dropzone-border);
+    border-radius: 0.5rem;
+    background-color: var(--dropzone-background);
+    display: block;
+    height: 200px;
+}
+
+.dropzone-container {
+    padding: 2rem 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--file-text-color);
+    z-index: 20;
+}
+
+.dropzone-title {
+    padding-top: 1.5rem;
+}
+
+.browse {
+    text-decoration: underline;
+    color: var(--sea);
+}
+
+
+.file-input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    cursor: pointer;
+}
+
+/* parent should have z-index */
+.file-icon {
+    /* Need position to allow stacking of pseudo-elements */
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+    border: 0.125rem solid #b8bec9;
+    position: relative;
+    width: 4rem;
+    height: 5.25rem;
+    /* Padding for demo purposes */
+    padding: 0.625rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 2rem;
+    color: var(--sea);
+}
+
+
+.file-icon:before {
+    left: -0.625rem;
+    top: 0.5rem;
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 0.125rem solid #ccd0d8;
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+}
+
+.file-icon:after {
+    top: -0.25rem;
+    right: -0.25rem;
+    left: auto;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 0.25rem;
+    border-width: 0.625rem;
+    border-style: solid;
+    border-color: #f9f9fb #f9f9fb #b8bec9 #b8bec9;
+    content: "";
+    position: absolute;
+    background-color: #ffffff;
+}

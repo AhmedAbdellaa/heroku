@@ -1,0 +1,38 @@
+{%extends 'stamp/home_template.html'%}
+{%block title%}Login{%endblock%}
+{%block main%}
+
+<div class='container'>
+    <div class="row"> 
+        <div class='col'>
+            <h1>log in</h1>
+            <hr>
+            <form action="/" method="post">
+                {% macro form_input(l_name='', type='', name='') %}
+                <div class="form-group">
+                    <label >{{l_name}}</label>
+                    <input class ='form-control' type={{type}}  name={{name}}>
+                </div>
+                {%endmacro%}
+                {{form_input('Username','text','username')}}
+                {{form_input('password','password','password')}}
+                <div class="form-group">
+                <button type="submit" class ='form-control btn btn-primary'>Log In</button>
+            </div>
+                <div class="form-group">
+                <label >new user ?</label>
+                <button type="button" class ='form-control btn btn-primary' id="signup">Sign Up</button>
+            </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<script>
+    $("#signup").on("click",()=>{
+        console.log("signup")
+        window.location.href=window.origin+"/sign-up"
+    })
+    </script>
+{%endblock%}
+

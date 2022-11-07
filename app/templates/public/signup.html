@@ -1,0 +1,25 @@
+{%extends 'stamp/home_template.html'%}
+{%block title%}sign up{%endblock%}
+{%block main%}
+<div class='container'>
+    <div class="row">
+        <div class='col'>
+            <h1>Sign up</h1>
+            <hr>
+            <form action="/sign-up" method="post">
+                {% macro form_input(l_name='', type='', name='') %}
+                <div class="form-group">
+                    <label >{{l_name}}</label>
+                    <input class ='form-control' type={{type}}  name={{name}}>
+                </div>
+                {%endmacro%}
+                {{form_input('Username','text','username')}}
+                {{form_input('Email','text','email')}}
+                {{form_input('password','password','password')}}
+                <button type="submit" class ='form-control btn btn-primary'>Sign up</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+{%endblock%}

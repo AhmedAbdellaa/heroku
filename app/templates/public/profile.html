@@ -1,0 +1,106 @@
+{%extends 'stamp/home_template.html'%}
+{%block title%}pdf list{%endblock%}
+{%block main%}
+<style>
+    .pdf-list-button {
+        flex-grow: 0;
+        margin: 2px 8px 2px 8px;
+        padding: 5px 15px 5px 15px;
+    }
+
+    /* .pdf-list-button.download{
+        background-color: ;
+    } */
+    .pdf-list-button.delete {
+        background-color: #d43f3a;
+        border: #d43f3a;
+    }
+
+    .pdf-list-info {
+        margin: 2px 8px 2px 8px;
+        padding: 5px 15px 5px 15px;
+    }
+
+    .header {
+        margin: 20px 0 34px 0px;
+        border-bottom: 1px solid #dfdfdf;
+        padding: 20px 0 29px 0px;
+    }
+</style>
+<div class="container">
+
+    <div class="row header">
+        <h1 class="col">pdf list </h1>
+        <button type="button" class="btn btn-primary col" id="signout" style="flex-grow: 0.1;">SIGN OUT</button>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            {% if user %}
+            {%for file in files%}
+            <div class="card">
+                <div class="card-body row" style="display: flex;">
+
+                    <h5 class="filename col pdf-list-info">{{file[0]}}</h5>
+                    <h5 class="filestate col pdf-list-info">{{file[1]}}</h5>
+                    <button type="button" class="btn btn-primary col pdf-list-button download"
+                        onclick='document.location=window.origin+"/pdf-from-list/"+"{{file[0]}}"'>download</button>
+                    <button type="button" class="btn btn-primary col pdf-list-button delete" id="{{file[0]}}"
+                        value="{{file[0]}}" onclick="whichButton(this.id)">delete</button>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    function whichButton(id_clicked) {
+
+        var filenode = document.getElementById(id_clicked)
+        // 
+        $.ajax({
+            type: 'POST',
+            url: window.origin + "/delet-output-file",
+            data: { "file_name": filenode.value },
+            dataType: 'json',
+
+            success: (res) => {
+                filenode.parentNode.parentNode.remove()
+
+            },
+            error: (res) => {
+                console.log(res)
+            }
+
+        })
+    }
+
+    function file_card(id_clicked) {
+        var filenode = document.getElementById(id_clicked)
+        console.log(filenode.value)
+        console.log(id_clicked)
+        $.ajax({
+            type: 'POST',
+            url: window.origin + "/pdfViewer",
+            data: { "output_file": filenode.dataset["file"] },
+            dataType: 'json',
+
+            success: (res) => {
+            },
+            error: (res) => {
+                console.log(res)
+            }
+
+        })
+    }
+
+
+    $("#signout").on("click", () => {
+        window.location.href = window.origin + "/signout"
+
+    })
+</script>
+{%endblock%}

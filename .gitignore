@@ -1,0 +1,5 @@
+/__pycache__
+*.pdf
+.history
+/upload_pdf/*
+/venv
